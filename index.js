@@ -43,7 +43,6 @@ app.post('/application', (req, res) => {
             error: 'Please fill in all fields correctly.'
         });
     }
-<<<<<<< HEAD
 
     const monthlyRate = annualRate / 100 / 12;
     const numberOfPayments = parseInt(term);
@@ -60,8 +59,6 @@ app.post('/application', (req, res) => {
         annualInterestRate: `${annualRate}%`,
         monthlyPayment: `R${monthlyPayment.toFixed(2)}`
     });
-=======
->>>>>>> 86056a35d64b1955a73f75c3837be5c035d3998e
 });
 
 app.listen(port, () => {
