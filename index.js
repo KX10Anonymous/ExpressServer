@@ -30,8 +30,11 @@ const calculateInterestRate = (idNumber) => {
         } else if (age < 60) {
             annualRate += 1.5;
         }
+        
+         // Format the birthdate as YYYY-MM-DD
+        const formattedBirthDate = birthDateObj.toISOString().split('T')[0];
 
-        return { age, annualRate };
+        return { age, annualRate, birthDate: formattedBirthDate };
     }
     return null;
 };
@@ -39,7 +42,7 @@ const calculateInterestRate = (idNumber) => {
 app.post('/application', (req, res) => {
     const {idNumber, loanAmount, term } = req.body;
 
-    const { age, annualRate } = calculateInterestRate(idNumber) || {};
+    const { age, annualRate, birthDate } = calculateInterestRate(idNumber) || {};
 
     if (age === undefined || !loanAmount || !term || isNaN(parseFloat(loanAmount)) || isNaN(parseInt(term))) {
         return res.status(400).json({
@@ -57,6 +60,7 @@ app.post('/application', (req, res) => {
     return res.json({
         status: "Application Submitted",
         age: age,
+        birthDate: birthDate,
         loanAmount: `R${loanAmountFloat.toFixed(2)}`,
         term: `${term} months`,
         annualInterestRate: `${annualRate}%`,
